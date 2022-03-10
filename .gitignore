@@ -1,1 +1,3 @@
-notincluded.txt
+*.docx
+NERD/
+.my_file
