@@ -175,3 +175,41 @@ console.log(myObject["1 Phone"]); //has to be in quotes as identifier convention
 
 let mn = "username";
 console.log(myObject[mn]); //will look for 'username' key to get its value using the var mn
+
+//Nested arrays and objects within each other
+const maObj = {
+  userData: {
+    fname: "Yishak",
+    lname: "Zewdineh",
+  },
+  hobbies: ["Music", "Art"],
+}; //Arrays for keys and objects within objects can be used
+maObj.userData.mname = "Sahlemariam";
+maObj.hobbies[1] = "Gaming";
+console.log(maObj);
+console.log(maObj.hobbies[0]);
+console.log(maObj.userData.fname, maObj.userData.lname);
+
+const maArr = [
+  {
+    product: "HP",
+    price: "1000$",
+    quantity: 23,
+  },
+  {
+    product: "Acer",
+    price: "2000$",
+    quantity: 12,
+  },
+]; //objects within arrays can be used
+console.log(maArr[1].product, "is ma fav Laptop ever!!");
+
+//Array and object Equality
+const check1 = [12, 22, 43];
+const check2 = [];
+console.log(check1 == check2); //false, cause the arrays point to diff reference
+const check3 = check1;
+console.log(check3 === check1); //true, cause both are referencing same location in memory
+// also its same for objects!!
+
+//LOOPS
