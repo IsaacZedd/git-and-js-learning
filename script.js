@@ -167,7 +167,7 @@ const myObject = {
   23: "Twenty Three",
   anot: 0 === 0 ? true : false, //we can assign to keys whatever we want
 };
-console.log(myObject.position, "Yishak!"); // . is used to access object datas
+console.log(myObject.position, "!"); // . is used to access object datas
 //console.log(myObject.23); //doesn't work using . to access number keys, instead use below method
 console.log(myObject["23"]); //[] is used to access value if key is number or symbol(invalid identifier), and it looks for 23 key as a string.
 console.log(myObject["2" + "3"]);
@@ -202,7 +202,7 @@ const maArr = [
     quantity: 12,
   },
 ]; //objects within arrays can be used
-console.log(maArr[1].product, "is ma fav Laptop ever!!");
+console.log(maArr[1].product, "is ma fav Laptop you Mothefockas!!");
 
 //Array and object Equality
 const check1 = [12, 22, 43];
