@@ -5,14 +5,18 @@ Common trends used when coding:
   - if situation has only 2 conditions(i.e if & else), then use ternary condition operator
   - use !, && and || at a time to write less ifelseif codes
   - use const keyword with Arrays and Objects often
-  -
+  - use for loops for number-related cases like iterating over numbers
+  - use while loops for some condition to meet true or false 
+  - break keyword is often used in while loop(while(true){...}), not with for loops
+  - for .. of is used in iterables(strs,arrays) and also in objects but used different way. and its preferable
+  - objects are not iterable!!!!
 
 */
 
 // alert("Gech");
 console.log("Hello Deers,".toUpperCase());
 console.log(3 > 0, "Fuuck", `${"Username".slice(0, 4).toLowerCase()}`);
-console.error("Uncaught error happened!!");
+console.error("You're Busted DUDE!!");
 let myVar = 23;
 if (myVar++ > 21) {
   console.log("Awesome");
@@ -212,4 +216,202 @@ const check3 = check1;
 console.log(check3 === check1); //true, cause both are referencing same location in memory
 // also its same for objects!!
 
-//LOOPS
+/* LOOPS */
+//for loop
+for (let i = 0; i < 5; i++) {
+  console.log("Iteration: ", i);
+}
+for (let i = 0; i < 10; i += 2) {
+  console.log("Hi", i);
+}
+for (let i = 1; i <= 7; i++) {
+  console.log(`${i}x${i} = ${i * i}`);
+}
+let star = "";
+let word = "NERDOV";
+for (let i = word.length - 1; i >= 0; i--) {
+  star = star + word[i];
+}
+console.log(star); //out of the loop displays the final iterated value
+//Infinite Loops
+// for (let i = 0; i >= 0; i++) {
+//   console.log("Infinite Loop!!");
+// }
+const forArray = [
+  {
+    fN: "Yishak",
+    carrrer: "Developer",
+  },
+  {
+    fN: "Getahun",
+    carrrer: "Hacker",
+  },
+  {
+    fN: "Bekele",
+    carrrer: "Manager",
+  },
+];
+for (let i = 0; i < forArray.length; i++) {
+  console.log(`${forArray[i].fN} is a ${forArray[i].carrrer}` + "!");
+}
+//Loop through a string reversely
+let maaStr = "LOOPER!";
+for (let i = maaStr.length - 1; i >= 0; i--) {
+  console.log(`${maaStr[i]} ${i}`);
+}
+
+const forAverage = [
+  {
+    fN: "Yishak",
+    score: 98,
+  },
+  {
+    fN: "Getahun",
+    score: 92,
+  },
+  {
+    fN: "Bekele",
+    score: 87,
+  },
+];
+let ave = 0;
+
+for (let i = 0; i < forAverage.length; i++) {
+  const cont = forAverage[i];
+  ave = ave + cont.score;
+}
+console.log(ave / forAverage.length);
+
+//Nested for loops
+let stro = "NERD";
+for (let i = 0; i <= 5; i++) {
+  console.log("YOU Busted!!!");
+  for (let j = stro.length - 1; j >= 0; j--) {
+    console.log(`   *${stro[j]}*`);
+  }
+}
+
+const gameBoard = [
+  [4, 21, 55, 23],
+  [66, 58, 33, 56],
+  [78, 22, 11, 43],
+  [65, 32, 19, 10],
+];
+let tot = 0;
+for (let i = 0; i < gameBoard.length; i++) {
+  let row = gameBoard[i];
+  if (i == 0) {
+    console.log(row, `is ${[i]}th row.`);
+  } else if (i == 1) {
+    console.log(row, `is ${[i]}st row.`);
+  } else if (i == 2) {
+    console.log(row, `is ${[i]}nd row.`);
+  } else {
+    console.log(row, `is ${[i]}rd row.`);
+  }
+  for (let j = 0; j < row.length; j++) {
+    tot += row[j];
+    console.log(`      ${row[j]} is ${[j]}th element.`);
+  }
+  console.log(tot, "is the sum of all values in the array");
+}
+//While Loop
+let i = 0;
+while (i <= 5) {
+  console.log(i);
+  i++;
+}
+console.log("");
+const target = Math.floor(Math.random() * 10);
+let guess = Math.floor(Math.random() * 10);
+while (guess !== target) {
+  console.log(guess);
+  guess = Math.floor(Math.random() * 10); //cause we need to update new attempt to make the condition false
+}
+console.log(`Target: ${target} - Guess: ${guess}`);
+
+//break keyword
+console.log("");
+const targeted = Math.floor(Math.random() * 10);
+let guessed = Math.floor(Math.random() * 10);
+while (true) {
+  if (guessed === targeted) {
+    break;
+  }
+  console.log(guessed + "=Guessed", targeted + "=Targeted");
+  guessed = Math.floor(Math.random() * 10); //cause we need to update new attempt to make the condition false
+}
+console.log(`Congrats!!! Target: ${targeted} , Guess: ${guessed}`);
+
+//for .. of loop
+const forOf = ["he", "she", "it", "they"];
+for (let noun of forOf) {
+  console.log(`'${noun}'`);
+}
+for (let hi of "yishak") {
+  console.log(hi.toUpperCase());
+}
+console.log("");
+
+//for and for .. of comparsion
+let matrix = [
+  [2, 7, 6],
+  [9, 5, 1],
+  [4, 3, 8],
+];
+//using normal for loop
+for (let i = 0; i < matrix.length; i++) {
+  let grid = matrix[i];
+  let sum = 0;
+  // console.log(grid);
+  for (let j = 0; j < grid.length; j++) {
+    sum = sum + grid[j];
+    // if (sum === 15) {
+    //   console.log("Hell yes its 15!!");
+    // }
+  }
+  console.log(`${grid} is summed as = ${sum}`);
+}
+console.log("-----------------------------");
+//using for .. of loop
+for (grid of matrix) {
+  let sum = 0;
+  for (let num of grid) {
+    sum += num;
+  }
+  console.log(`${grid} is summed as = ${sum}`);
+}
+
+const words1 = ["mail", "milk", "bath", "black"];
+const words2 = ["box", "shake", "tub", "berry"];
+for (let i = 0; i < words1.length; i++) {
+  //joins each words1 elems straight to words2 array
+  console.log(words1[i] + words2[i]);
+}
+
+//iterating over objects uses Object.keys(obj) or Object.values(obj) to iterate through for .. of loop
+const movieReviews = {
+  Legion: 9.9,
+  Transformers: 9.4,
+  Avengers: 8.9,
+  "The Hobbit": 9.7,
+};
+for (let mov of Object.keys(movieReviews)) {
+  console.log(mov, movieReviews[mov]);
+}
+let aveRev = 0;
+const rating = Object.values(movieReviews);
+for (let mov of rating) {
+  aveRev += mov;
+}
+aveRev /= rating.length;
+console.log(aveRev);
+
+//for .. in loops used to iterate keys over objects, not used with arrays often
+for (let prop in movieReviews) {
+  console.log(prop);
+}
+
+for (let k in [23, 33, 24, 21]) {
+  console.log(k); //outputs the props(indices) not values, cause for .. in loops iterates over keys(properties)
+}
