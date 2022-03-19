@@ -1,7 +1,10 @@
 /*
 
 Common trends used:
-  
+  - functions are objects!!
+  - anonymous funcs are those which don't have func names
+  - let and const are block-scoped, var is function-scoped
+  - lexical-scoped are related with nested functions
 
 */
 
@@ -110,3 +113,209 @@ const value = checkColor(["brown", "red", "yellow"]); //we pass array to the fun
 const value2 = checkColor(["indigo", "orange"]);
 console.log(value);
 console.log(value2);
+
+/*
+
+  Challenge #1
+  password and username validator function:
+    - 8 char long password
+    - pass not contain spaces
+    - pass must not be username value
+
+*/
+console.log("------Pass Validation------");
+function isValidPassword(password, username) {
+  if (
+    password.length > 8 &&
+    !password.includes(" ") && //or use indexOf(' ') === -1
+    !password.includes(username) //or use indexOf(username) === -1
+  ) {
+    return true;
+  }
+  return false;
+}
+console.log(isValidPassword("yasfwerewr", "yasfw")); //compares username's whole value exact with password value
+
+function isValidPassword2() {
+  //or this way also possible
+  const charLength = password.length > 8;
+  const spaces = password.indexOf(" ") === -1;
+  const userContain = password.indexOf(username) === -1;
+  if (charLength && spaces && userContain) return true;
+  return false;
+}
+console.log(isValidPassword("yasfwerewr", "isak"));
+
+/*
+
+  Challenge #2
+  Find average value of array numbers:
+    - arr[20,30,40] = 20 + 30 + 40 / arr.length = result
+
+*/
+console.log("------Average of arrays------");
+function aveArray(myArray) {
+  let ave = 0;
+  let arrLen = myArray.length;
+  for (let arr of myArray) {
+    ave += arr;
+  }
+  return ave / arrLen;
+} //we can also use normal for loop
+
+console.log(aveArray([50, 20, 10]));
+
+/*
+
+  Challenge #3
+  Check if a sentence is a pangram(include all english alphabets at least once):
+    - The quick brown fox ... is a pangram
+
+*/
+console.log("----pangram sentence checking----");
+function isPangram(sentence) {
+  let cased = sentence.toLowerCase();
+  const alpha = "abcdefghijklmnopqrstuvwxyz";
+  for (let char of alpha) {
+    // if (cased.indexOf(char) === -1) {
+    //   return false;
+    // }
+    //or this way using includes() method
+    if (!cased.includes(char)) {
+      return false;
+    }
+  }
+  return true;
+}
+console.log(isPangram("The quick brown fox jumps over the lazy dog."));
+console.log(isPangram("The quick brown jumps over the lazy dog."));
+
+/*
+
+  Challenge #4
+  A function which returns a random playing card object:
+    - {
+      value: 'K',
+      suit: 'clubs'
+      }
+    2...10 and J,Q,K,A -> values
+    clubs, spades, diamonds, hearts
+
+*/
+console.log("------Get random card------");
+function getCard() {
+  const valls = [
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "J",
+    "Q",
+    "K",
+    "A",
+  ];
+  const suits = ["clubs", "spades", "hearts", "diamonds"];
+  const randVal = Math.floor(Math.random() * valls.length);
+  const valResult = valls[randVal];
+  const randSuit = Math.floor(Math.random() * suits.length);
+  const suitResult = suits[randSuit];
+  const cardObject = {
+    value: valResult,
+    suit: suitResult,
+  };
+  return cardObject;
+}
+console.log(getCard());
+
+/*or this way here using two functions, 1 for generating random values from the arrays, the other 
+which holds the the arrays and displays the random object of values generated*/
+function pick(arr) {
+  const index = Math.floor(Math.random() * arr.length);
+  const randVal = arr[index];
+  return randVal;
+}
+function getCard2() {
+  const valls = [
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "J",
+    "Q",
+    "K",
+    "A",
+  ];
+  const suits = ["clubs", "spades", "hearts", "diamonds"];
+  return {
+    value: pick(valls),
+    suit: pick(suits),
+  };
+}
+console.log(getCard2());
+
+//Scope of variables: Block, Function and Global
+
+function funcScope() {
+  //Function-Scoped variables
+  let myVar = "variable";
+}
+// console.log(myVar); //error cause myVar is defined within funcScope() function
+
+let radius = 8;
+if (radius > 0) {
+  //Block-Scope variables
+  const PI = 3.14;
+  let circ = 2 * PI * radius;
+  var lotto = 23442;
+}
+//console.log(PI * circ); //error cause PI and circ are block vars which are defined in the if block
+console.log(radius); //works, cause radius isn't block scope
+console.log(lotto); //works, cause var is not blocked to the block, but not const and let
+
+function doubleArray(arr) {
+  const result = [];
+  for (num of arr) {
+    const double = num * 2; //double is block-scoped, but if its var can be accessible outside
+    result.push(double);
+  }
+  //return double; // not work, cause its block scoped to the for loop. this will work if double is var
+  return result; //result is function-scoped
+}
+console.log(doubleArray([2, 4, 6]));
+
+function outer() {
+  //Lexical scoped variables (nested functions)
+  let movie = "Legion";
+  function inner() {
+    //let movie = "Shooter"; //will be used by below statement as the inner() looks for movie var, then look to parent
+    console.log(movie.toUpperCase()); //as movie is declared in parent func, inner func can access it
+  }
+  inner(); //helps in calling inner and get its exec, when outer() function called
+}
+//inner(); //will not work
+outer(); //will work
+
+//Funcion expressions, another way of defining functions
+function sum(x, y) {
+  return x + y;
+}
+const addition = function (x, y) {
+  //anonymous functions
+  return x + y;
+};
+console.log(addition(23, 3));
+const addOn = function sumUp(x, y) {
+  //named function expression
+  return x + y;
+};
+console.log(addOn(3, 5));
