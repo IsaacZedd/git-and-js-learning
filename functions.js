@@ -5,6 +5,10 @@ Common trends used:
   - anonymous funcs are those which don't have func names
   - let and const are block-scoped, var is function-scoped
   - lexical-scoped are related with nested functions
+  - nested functions within functions is possible
+  - anony func is unnamed func. (i.e. function(){})
+  - return func out of func is possible (returned func is anonymous)
+  - its common to use anonymous funcs as callbacks.
 
 */
 
@@ -319,3 +323,166 @@ const addOn = function sumUp(x, y) {
   return x + y;
 };
 console.log(addOn(3, 5));
+console.log("----------");
+//Functions are objects!! they can be stored in array or variables and called----------------
+function add(x, y) {
+  return x + y;
+}
+const sub = function (x, y) {
+  return x - y;
+};
+function multiply(x, y) {
+  return x * y;
+}
+const divi = function (x, y) {
+  return x / y;
+};
+
+//storing above functions in array
+const arrayFunc = [add, sub, multiply, divi];
+for (let func of arrayFunc) {
+  //loops over the arrayFunc to iterate over the functions, which inturn has a value and operation
+  let res = func(30, 5); //res stores each iterated func value as the params passed(30,5) to evaluate their operation
+  console.log(res);
+}
+
+//storing above functions in object
+const objFunc = {
+  addition: add,
+  mult: multiply,
+  subs: sub,
+  division: divi,
+};
+console.log(objFunc.mult(4, 5)); //mult key has multiply func value, continued below:)
+//which means the value we passed(4,5) will be evaluated in the func then becomes mult's value
+let h = 45,
+  k = 9;
+console.log(objFunc.division(h, k));
+
+//FUNCS as arguements for another functions
+function cry() {
+  console.log("Haaaa I'm Tired!!");
+}
+function happy() {
+  console.log("HEll yes feeling Cool!!");
+}
+function callTwoTimes(arg) {
+  arg();
+  arg();
+}
+callTwoTimes(cry); //we passed cry func for callTwoTimes to call above arg() two times.
+callTwoTimes(happy);
+
+function repeatNTimes(passedFunc, num) {
+  for (let i = 0; i < num; i++) {
+    passedFunc();
+  }
+}
+repeatNTimes(cry, 6); //takes both arguements and iterated 6 times on the cry function value
+repeatNTimes(happy, 3);
+
+function joined(first, second) {
+  let fname = first();
+  let lname = second();
+  console.log(fname, lname);
+  // YISHAK ZEWDINEH, cause those fname and lname funcs just return names which means can be stored in a variable, but not work with
+  // a func that has no return value.
+}
+joined(fName, lName);
+function fName() {
+  return "YISHAK";
+}
+function lName() {
+  return "ZEWDINEH";
+}
+
+function pickOneFunc(f1, f2) {
+  let random = Math.random();
+  // if (random < 0.5) {
+  //   f1();
+  // } else {
+  //   f2();
+  // }
+  random < 0.5 ? f1() : f2();
+}
+function f1() {
+  console.log("Function 1");
+}
+function f2() {
+  console.log("Function 2");
+}
+pickOneFunc(f1, f2);
+
+//FUNCS as return types for another funcs
+function multiplyBy(num) {
+  return function (x) {
+    return x * num;
+  };
+}
+const double = multiplyBy(7);
+//double holds the anonymous function which is inside multiplyBy() and 7 is passed to num param in it
+console.log(double(5));
+// 35, cause 5 will be placed in x param, then x*num is returned and stored in double variable
+
+function checkBetween(min, max) {
+  return function (age) {
+    return age >= min && age <= max;
+  };
+}
+const isChild = checkBetween(0, 18);
+const isAdult = checkBetween(19, 50);
+const isYear = checkBetween(1990, 2012);
+console.log(isChild(5));
+console.log(isAdult(43));
+console.log(isYear(2013));
+
+/*
+FUNCTION CALLBACKS, we've seen in above examples:
+  > callTwoTimes(cry) - here cry func is called a callback func
+    because its used in callTwoTimes() as an arguement
+*/
+// function welcome() {
+//   alert("Callbacks after 5 sec!");
+// }
+// setTimeout(welcome, 5000);
+// // builtin func which takes a func and time to be used for delay
+// // welcome is a callback here
+
+// setTimeout(function () {
+//   alert("Anonymous func callback after 10 sec!");
+// }, 10000); // uses anonymous func as a callback
+
+//Illustrates the use of anonymous callback func in btn listener method
+const btn = document.querySelector("button");
+btn.addEventListener("click", function () {
+  alert("You clicked me!!!");
+});
+
+//Hoisting - is kind of error ocurred when not keeping order of code,
+// 1 - var keyword (is hoisted)
+console.log(damn); //undefined, but not an error
+var damn = "HEll NO!!";
+// JS treat it as:
+//    var damn;
+//    console.log(damn);
+//    damn = "HEll NO!!";
+
+// 2 - let and const keyword (are not hoisted)
+// console.log(mess); //error, before init mess can't be accessed
+// let mess = "Tired!";
+// console.log(bitcoin);
+// const bitcoin = 23;
+
+// 3 - in normal functions (not hoisted)
+hoistedFunc();
+function hoistedFunc() {
+  console.log("Not hoisted function!!");
+}
+
+// 4 - in function expressions (hoisted)
+expFunc(); //error, cause it is hoisted as it uses var keyword
+console.log(expFunc); //can log expFunc as undefined, but not expFunc()
+var expFunc = function () {
+  //if expFunc let/const, init before error occurs
+  console.log("Is Hoisted!!");
+};
