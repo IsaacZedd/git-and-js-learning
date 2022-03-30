@@ -9,8 +9,11 @@ Common trends used:
   - anony func is unnamed func. (i.e. function(){})
   - return func out of func is possible (returned func is anonymous)
   - its common to use anonymous funcs as callbacks.
+  - one-liner arrow implicit funcs used when there's a single expression in the body
 
 */
+
+const log = (arg) => console.log(arg);
 
 function myFunction() {
   console.log("Hell yes!! Into functions.");
@@ -474,15 +477,198 @@ var damn = "HEll NO!!";
 // const bitcoin = 23;
 
 // 3 - in normal functions (not hoisted)
-hoistedFunc();
+hoistedFunc(); //this works fine
 function hoistedFunc() {
   console.log("Not hoisted function!!");
 }
 
 // 4 - in function expressions (hoisted)
-expFunc(); //error, cause it is hoisted as it uses var keyword
+//expFunc(); //error, cause it is hoisted as it uses var keyword
 console.log(expFunc); //can log expFunc as undefined, but not expFunc()
 var expFunc = function () {
   //if expFunc let/const, init before error occurs
   console.log("Is Hoisted!!");
 };
+
+/* 
+Arrow funcs and func callbacks in arrays using methods(forEach,reduce,...) 
+-------------*/
+//forEach() -> accepts callback
+const arrCall = [23, 12, 30, 16];
+arrCall.forEach(function (element) {
+  //this array callback has 1 arg and used to iterate and access each ele
+  // ments of arrCall elements.
+  console.log(element); //logs all arrCall[] elements.
+});
+arrCall.forEach(function (element, index) {
+  //can also used 2nd param which is index of that array
+  console.log(index, element);
+});
+
+function tripled(n) {
+  console.log(n * 3);
+}
+arrCall.forEach(tripled);
+
+const books = [
+  {
+    title: "Beginner Python",
+    author: "Yishak",
+    rating: 4.8,
+  },
+  {
+    title: "Python for Experts and Beginner",
+    author: "Biruk",
+    rating: 4.9,
+  },
+  {
+    title: "Java in Depth",
+    author: "Getahun",
+    rating: 4.5,
+  },
+  {
+    title: "PHP Cookbook",
+    author: "Bekele",
+    rating: 4.7,
+  },
+];
+books.forEach(function (arr) {
+  console.log(arr.title.toUpperCase());
+});
+
+//map() -> extracts new array from original by using func callbacks
+const nums = [21, 22, 23, 24, 25, 27];
+const mappedArr = nums.map(function (n) {
+  // multiplies each nums elems by 2 and store them in mappedArr as a
+  // new array.
+  return n * 2;
+});
+console.log(mappedArr); // [42,44,46,...]
+const checkOddEven = nums.map(function (check) {
+  // checks even/odd and returns a new object with num and isOdd keys ...
+  // that have values(num and true/false) to the new checkOddEven array.
+  return {
+    num: check,
+    isOdd: check % 2 !== 0,
+  };
+});
+console.log(checkOddEven);
+
+const words = ["asap", "nerd", "granite"];
+const wordMapped = words.map(function (word) {
+  return word.toUpperCase().split("").join(".");
+});
+console.log(wordMapped);
+
+const titledArray = books.map(function (titles) {
+  // mapped to books array (consisits objects) to return each title
+  // of the objects on the new titledArray[]
+  return titles.title;
+});
+console.log(titledArray);
+
+//function arrows, => along with expressions
+const arrowFunc = (message) => {
+  message = "EARTH is HELL!!";
+  return message;
+};
+log(arrowFunc());
+const checkk = (num) => {
+  return num % 2 === 0;
+};
+log(checkk(12));
+log(checkk(17));
+
+const anott = (name, company) => {
+  return {
+    name: name,
+    company: company,
+  };
+};
+log(anott("Elon Musk", "SPACEX"));
+const noParam = () => {
+  return "Empty Parameter arrow function!";
+};
+log(noParam());
+
+const arrCheck = (arr) => {
+  let incl = "yishak";
+  if (arr.includes(incl)) {
+    return `Your ${arr} has '${incl}' included.`;
+  } else {
+    return `Sorry! ${arr} doesn't include '${incl}'.`;
+  }
+};
+log(arrCheck(["lawyer", "judge"]));
+
+//Arrow functions Implicit returns
+const impRet = (number) => number * number;
+const oneImp = (val, val2) => val * val2; // one-liner implicit return
+
+const impArray = [4, 6, 3, 9];
+const double1 = impArray.map(function (num) {
+  //using normal anony func
+  return num * 2;
+});
+const double2 = impArray.map((num) => {
+  //using implicit return
+  return num * 2;
+});
+const double3 = impArray.map((num) => num * 2); //using one-liner
+
+const mapperOdd = impArray.map((num) => (num % 2 === 0 ? "Even" : "Odd"));
+
+//find() -> holds boolean val and returns the value of requested thing
+const nameSir = ["Ato Gebre", "Wero Kasech", "Ato and Obbo", "Obbo Jemal"];
+const namo = nameSir.find((namo) => {
+  return namo.includes("Ato"); //the first observed will be returned
+});
+
+const namo2 = nameSir.find(
+  (namo) => namo.indexOf("Obbo") === 0 //Obbo jemal, based on index not like includes()
+);
+
+const booksVal = books.find((num) => num.rating >= 4.6); //{t:'',a:'',r:''}
+const findAut = books.find((aut) => aut.author.includes("Yishak"));
+
+//filter() -> creates new array(copy) based on the passed value to evaluate the condtion
+const list = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+const filterEven = list.filter((n) => n % 2 === 0);
+const filterLess = list.filter((n) => n <= 5.5);
+
+const retRating = books.filter((rate) => rate.rating >= 4.6);
+const inclTitle = books.filter(
+  (tit) => tit.title.includes("Python") || tit.title.includes("Beginner")
+);
+
+const bookStore = [
+  {
+    title: "The Gausian Blur",
+    author: ["David", "Bombal"],
+    rating: 4.6,
+    genre: ["Graphics"],
+  },
+  {
+    title: "The Software Tools",
+    author: ["Colt", "Mosh"],
+    rating: 4.9,
+    genre: ["Coding", "Programming"],
+  },
+  {
+    title: "Human Cells",
+    author: ["Zedd", "Leeds"],
+    rating: 4.9,
+    genre: ["Health", "Biology"],
+  },
+  {
+    title: "The UFO",
+    author: ["Colt", "Mosh"],
+    rating: 4.9,
+    genre: ["Fiction"],
+  },
+];
+const query = "The"; //assume user's searched value
+const theIncl = bookStore.filter((book) => {
+  const titler = book.title.toLowerCase();
+  return titler.includes(query.toLowerCase());
+});
