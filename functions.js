@@ -672,3 +672,112 @@ const theIncl = bookStore.filter((book) => {
   const titler = book.title.toLowerCase();
   return titler.includes(query.toLowerCase());
 });
+
+//reduce() -> returns final computed value on each iteration of the array
+const reduceArr = [2, 3, 4, 5, 6];
+const reduced = reduceArr.reduce((start, current) => {
+  return start * current;
+});
+log(reduced); //720, starts with 2 * 3 then use the result to continue to last
+
+const redAdd = reduceArr.reduce((init, curr) => {
+  return init + curr;
+});
+log(redAdd); //20
+
+//part 2 of reduce()
+const maxArr = [12, 54, 22, 66, 34];
+const redMax = maxArr.reduce((max, currVal) => {
+  // checking the max number of maxArr[]
+  if (currVal > max) return currVal;
+  return max;
+});
+const mathMin = maxArr.reduce((min, currVal) => Math.min(min, currVal)); //we can also Math.max to find max value
+
+const longStr = ["asd", "rwerwerwer", "werr"];
+const checc = longStr.reduce((long, currVal) => {
+  if (currVal.length > long.length) return currVal;
+  return long;
+});
+
+const nerd = [3, 6, 2, 5, 4];
+const withInit = nerd.reduce((accum, currVal) => {
+  return accum + currVal;
+}, 20); //20 as initilizer value can be used as redude(func,initVal).
+
+const example = [
+  "Graphics",
+  "Engineering",
+  "Software",
+  "Marketing",
+  "Health",
+  "Engineering",
+  "Software",
+  "Software",
+  "Graphics",
+  "Software",
+];
+const objReduce = example.reduce((accum, currVal) => {
+  accum[currVal] = (accum[currVal] || 0) + 1;
+  return accum;
+}, {});
+//{} used as init to obtain the return value in form of:
+/* {
+    Graphics: 2,
+    Engineering: 2,
+    Software: 4,
+    ....
+   }
+*/
+const objReduce2 = example.reduce((accum, currVal) => {
+  //same as above objReduce, by checking if those key exist
+  if (accum[currVal]) {
+    accum[currVal]++;
+  } else {
+    accum[currVal] = 1;
+  }
+  return accum;
+}, {});
+
+const boook = [
+  {
+    title: "Beginner Python",
+    author: "Yishak",
+    rating: 4.8,
+  },
+  {
+    title: "Python for Experts and Beginner",
+    author: "Biruk",
+    rating: 4.9,
+  },
+  {
+    title: "Java in Depth",
+    author: "Getahun",
+    rating: 2.5,
+  },
+  {
+    title: "PHP Cookbook",
+    author: "Bekele",
+    rating: 3.5,
+  },
+  {
+    title: "Laravel Cookbook",
+    author: "Nerd",
+    rating: 3.7,
+  },
+];
+const arrangeBooks = boook.reduce((total, val) => {
+  /*
+  checks every rating and reduce them like this below: 
+   { 
+    2: [books with 2 ratings], 
+    3: [books with 3 ratings], 
+    4: [books with 4 ratings] 
+  }
+  
+  */
+  const key = Math.floor(val.rating);
+  if (!total[key]) total[key] = [];
+  total[key].push(val);
+  return total;
+}, {});
