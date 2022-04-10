@@ -10,7 +10,7 @@ Common trends used:
   - return func out of func is possible (returned func is anonymous)
   - its common to use anonymous funcs as callbacks.
   - one-liner arrow implicit funcs used when there's a single expression in the body
-
+  - use Def params at end of functions arguements, like myFunc(a,b=5)
 */
 
 const log = (arg) => console.log(arg);
@@ -781,3 +781,72 @@ const arrangeBooks = boook.reduce((total, val) => {
   total[key].push(val);
   return total;
 }, {});
+
+/*
+
+  New JS features; Def params, spread, destructuring, Rest params and more
+
+*/
+
+//default params
+function oldWay(a, b) {
+  return a * b;
+}
+log(oldWay(3, 6)); //18
+log(oldWay(5)); //NaN, cause b param not passed
+function newWay(a, b = 4) {
+  // if b is not passed auto assigned to value 4
+  return a + b;
+}
+log(newWay(4)); //8, cause by def b = 4 assigned
+
+//Spread in func, array and object (...identifier)
+const numArr = [12, 5, 21, 6];
+log(Math.max(...numArr)); //21
+log("");
+function spread(a, b, c, d) {
+  log(a);
+  log(b);
+  log(c);
+  log(d);
+}
+log(spread(...numArr));
+
+const fruits = ["Apple", "Mango", "Orange"];
+const str = "RED";
+function fruit(a, b, c) {
+  log(`A for: ${a}`);
+  log(`M for: ${b}`);
+  log(`O for: ${c}`);
+}
+fruit(...fruits);
+fruit(...str);
+
+//spread in array literals
+const frontend = ["HTML", "CSS", "JS", "Bootstrap"];
+const backend = ["PHP", "NodeJS", "Laravel", "Ruby"];
+const webDev = [...frontend, ...backend];
+log(webDev); //mixed both front and back arrays
+
+//spread in object literals
+const ageName = {
+  fullName: "Isak Zedd",
+  age: 22,
+};
+const marStatus = { music: ["Sappheiros", "CMA"] };
+const newObj = {
+  ...ageName,
+  age: 23, //age is updated, and order matters on values
+  employed: false,
+  ...marStatus,
+};
+log(newObj);
+
+const iterableArr = [
+  ..."NERD",
+  { ...marStatus },
+  ...[12, 44, 23],
+  ...[33, 23, ["DART"]],
+  { ..."ABCDEFG" },
+];
+log(iterableArr);
